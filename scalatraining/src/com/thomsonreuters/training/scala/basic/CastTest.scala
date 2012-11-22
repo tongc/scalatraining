@@ -10,16 +10,18 @@ class CastTest extends Spec with ShouldMatchers {
   describe("Hello World") {
     it("should run") {
       var a: Any = Nil
-      intercept[ClassCastException] {
-        println(a.asInstanceOf[String])
+      var error = intercept[ClassCastException] {
+        println("a value is" + a.asInstanceOf[String])
       }
-      intercept[ClassCastException] {
+      assert(error.getMessage() === "scala.collection.immutable.Nil$ cannot be cast to java.lang.String")
+      error = intercept[ClassCastException] {
         var b = a match {
           case a2: String => a2
-          case _ => throw new ClassCastException
+          case _ => throw new ClassCastException("test")
         }
-        println(b);
+        println("b value is" + b);
       }
+      assert(error.getMessage() === "test")
     }
   }
 }
