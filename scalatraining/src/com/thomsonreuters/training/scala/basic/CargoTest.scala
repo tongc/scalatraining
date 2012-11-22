@@ -19,5 +19,12 @@ class CargoTest {
 		override val carries = "People"
 	}
 
-
+	class DiselEngine extends Engine {
+		def name:String = {
+			return "test";
+		}
+		def maxCars:Int = {
+			return 5;
+		}
+	}
 }

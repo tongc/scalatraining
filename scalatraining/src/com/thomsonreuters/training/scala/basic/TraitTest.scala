@@ -1,11 +1,10 @@
 package com.thomsonreuters.training.scala.basic
 
-package com.thomsonreuters.training.scala.basic
-
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.Spec
+import scala.collection.mutable.ArrayBuffer
 
 @RunWith(classOf[JUnitRunner])
 class TraitTest extends Spec with ShouldMatchers {
@@ -15,7 +14,6 @@ class TraitTest extends Spec with ShouldMatchers {
         def get(): Int
         def put(x: Int)
       }
-      import scala.collection.mutable.ArrayBuffer
       class BasicIntQueue extends IntQueue {
         private val buf = new ArrayBuffer[Int]
         def get() = buf.remove(0)
@@ -32,6 +30,22 @@ class TraitTest extends Spec with ShouldMatchers {
 
       ifq.put(-1);
       println(ifq);
+
+      abstract class Strategy[T] {
+    	  def pr(v:T):T;
+      }
+
+      implicit object AStrategy extends Strategy[java.lang.String] {
+    	  def pr(v:java.lang.String):java.lang.String = {
+    	    return v.reverse;
+    	  }
+      }
+
+      def dd[T](item: T)(implicit drink:Strategy[T]) {
+    	  println(drink.pr(item))
+      }
+
+      dd("aaabbb")
     }
   }
 }
